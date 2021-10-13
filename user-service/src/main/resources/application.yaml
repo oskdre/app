@@ -1,0 +1,14 @@
+server:
+  port: 8082
+user:
+  details:
+    url: https://api.github.com/users/
+
+spring:
+  liquibase:
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://database:5432/postgres
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driverClassName: org.postgresql.Driver
