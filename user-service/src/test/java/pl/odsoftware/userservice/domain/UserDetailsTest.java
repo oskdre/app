@@ -20,7 +20,7 @@ class UserDetailsTest {
         //when
         UserDetails userDetailsResult = userDetails.doCalculations();
         //then
-        assertEquals(result, userDetailsResult.getCalculations());
+        assertEquals(result, userDetailsResult.getCalculations().result());
     }
 
     private static Stream<Arguments> parametersProvider() {
