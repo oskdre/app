@@ -1,8 +1,7 @@
 HELP.md
 target/
 .mvn/
-
-/*/mvnw.cmd
+**/mvnw.cmd
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
