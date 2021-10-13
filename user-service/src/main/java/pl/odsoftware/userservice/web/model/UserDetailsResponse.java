@@ -90,7 +90,7 @@ public class UserDetailsResponse {
                 userDetails.getType(),
                 userDetails.getAvatarUrl(),
                 userDetails.getCreatedAt(),
-                String.valueOf(userDetails.getCalculations())
+                String.valueOf(userDetails.getCalculations().result())
         );
     }
 }
