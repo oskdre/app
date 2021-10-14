@@ -6,13 +6,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+
 @Configuration
 public class RestConfig {
 
     @Bean
-    RestTemplate restTemplate() {
+    RestTemplate restTemplate(@Value("${rest.connection.timeout}") int connTimeout,
+                              @Value("${rest.read.timeout}") int readTimeout) {
         return new RestTemplateBuilder()
                 .errorHandler(new GithubApiErrorHandler())
+                .setConnectTimeout(Duration.of(connTimeout, ChronoUnit.MILLIS))
+                .setReadTimeout(Duration.of(readTimeout, ChronoUnit.MILLIS))
                 .build();
     }
 
