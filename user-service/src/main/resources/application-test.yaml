@@ -4,3 +4,9 @@ spring:
 user:
   details:
     url: http://localhost:5050/users/
+
+rest:
+  read:
+    timeout: 1000
+  connection:
+    timeout: 1000

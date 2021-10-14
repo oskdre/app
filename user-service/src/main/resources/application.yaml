@@ -4,6 +4,12 @@ user:
   details:
     url: https://api.github.com/users/
 
+rest:
+  read:
+    timeout: 1000
+  connection:
+    timeout: 1000
+
 spring:
   liquibase:
     enabled: true
