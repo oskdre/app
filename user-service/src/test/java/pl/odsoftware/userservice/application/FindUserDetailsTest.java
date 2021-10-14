@@ -1,8 +1,11 @@
 package pl.odsoftware.userservice.application;
 
+import io.vavr.Tuple2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.odsoftware.userservice.domain.Calculation;
 import pl.odsoftware.userservice.domain.UserDetails;
+import pl.odsoftware.userservice.test.setup.UserDetailsFactory;
 import pl.odsoftware.userservice.web.model.Login;
 import pl.odsoftware.userservice.web.model.UserDetailsResponse;
 
@@ -16,7 +19,23 @@ class FindUserDetailsTest {
     private FindUserDetails findUserDetails;
 
     @Test
-    @DisplayName("When user provider cannot find the user on github then return empty result")
+    @DisplayName("When user provider finds the user in external service then return user details with calculations")
+    void when_user_found(){
+        //given
+            Tuple2<Calculation, UserDetails> regularUser = UserDetailsFactory.get("regular_user");
+            findUserDetails = new FindUserDetails(login -> {}, (login -> Optional.of(regularUser._2)));
+        //when
+            Optional<UserDetailsResponse> result = findUserDetails.findByLogin(Login.of("test_login"));
+        //then
+            assertTrue(result.isPresent());
+            assertEquals(String.valueOf(regularUser._1.value()), result.get().getCalculations());
+            assertEquals(regularUser._2().getLogin(), result.get().getLogin());
+            assertEquals(regularUser._2().getName(), result.get().getName());
+            assertEquals(regularUser._2().getType(), result.get().getType());
+    }
+
+    @Test
+    @DisplayName("When user provider cannot find the user in external service then return empty result")
     void when_user_not_found(){
         //given
             findUserDetails = new FindUserDetails(login -> {}, (login -> Optional.empty()));
@@ -24,20 +43,6 @@ class FindUserDetailsTest {
             Optional<UserDetailsResponse> result = findUserDetails.findByLogin(Login.of("test_login"));
         //then
             assertTrue(result.isEmpty());
-    }
-
-    @Test
-    @DisplayName("When user provider finds the user on github then return user details with calculations")
-    void when_user_found(){
-        //given
-            String expectedCalculationsResult = "8.0";
-            UserDetails sampleUserDetails = new UserDetails(1,"test_login","test_name","test_type","test_avatar","test_date",3,2);
-            findUserDetails = new FindUserDetails(login -> {}, (login -> Optional.of(sampleUserDetails)));
-        //when
-            Optional<UserDetailsResponse> result = findUserDetails.findByLogin(Login.of("test_login"));
-        //then
-            assertTrue(result.isPresent());
-            assertEquals(expectedCalculationsResult, result.get().getCalculations());
     }
 
 }
