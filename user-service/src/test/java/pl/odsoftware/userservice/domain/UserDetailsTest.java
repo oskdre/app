@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class UserDetailsTest {
 
     @ParameterizedTest(name = "{index} => followers={0}, publicRepos={1}, result={2}")
-    @MethodSource("parametersProvider")
+    @MethodSource("parametersAndExpectedResult")
     @DisplayName("When followers and public repos provided then do expected calculations")
     void when_parameters_provided_then_do_calculations(int followers, int publicRepos, double result){
         //given
@@ -23,7 +23,7 @@ class UserDetailsTest {
             assertEquals(result, userDetailsResult.getCalculations().value());
     }
 
-    private static Stream<Arguments> parametersProvider() {
+    private static Stream<Arguments> parametersAndExpectedResult() {
         return Stream.of(
                 Arguments.of(0, 5, 0.0),
                 Arguments.of(3, 7, 18.0),
