@@ -19,7 +19,7 @@ public class Calculation {
         return followers == 0;
     }
 
-    public double result() {
+    public double value() {
         return result;
     }
 }
