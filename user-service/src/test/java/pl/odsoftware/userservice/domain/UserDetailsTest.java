@@ -16,11 +16,11 @@ class UserDetailsTest {
     @DisplayName("When followers and public repos provided then do expected calculations")
     void when_parameters_provided_then_do_calculations(int followers, int publicRepos, double result){
         //given
-        UserDetails userDetails = new UserDetails(1, "login", "name","type","url","createdAt", followers, publicRepos);
+            UserDetails userDetails = new UserDetails(1, "login", "name","type","url","createdAt", followers, publicRepos);
         //when
-        UserDetails userDetailsResult = userDetails.doCalculations();
+            UserDetails userDetailsResult = userDetails.doCalculations();
         //then
-        assertEquals(result, userDetailsResult.getCalculations().result());
+            assertEquals(result, userDetailsResult.getCalculations().value());
     }
 
     private static Stream<Arguments> parametersProvider() {
