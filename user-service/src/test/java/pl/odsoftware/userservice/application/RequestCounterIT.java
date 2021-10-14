@@ -33,37 +33,38 @@ class RequestCounterIT extends BaseIntegration {
     @DisplayName("When github user is looked for once then their counter equals to one")
     void when_one_user_lookup_then_counter_equals_to_one(){
         //given
-        setupGithubServer()
-                .withStatusCode(200)
-                .withResponseBody(GithubUserFactory.getUser("sample_user"));
+            setupGithubServer()
+                    .withStatusCode(200)
+                    .withResponseBody(GithubUserFactory.getUser("sample_user"));
         //when
-        findUserDetails.findByLogin(Login.of("sample_user"));
+            findUserDetails.findByLogin(Login.of("sample_user"));
         //then
-        int userSearchingCounter = database.findCounterByLogin("sample_user");
-        assertEquals(1, userSearchingCounter);
+            int userSearchingCounter = database.findCounterByLogin("sample_user").orElse(0);
+            assertEquals(1, userSearchingCounter);
     }
 
     @Test
     @DisplayName("When github user is looked for twice then their counter equals to two")
     void when_one_user_lookup_twice_then_counter_equals_to_two(){
         //given
-        setupGithubServer()
-                .withStatusCode(200)
-                .withResponseBody(GithubUserFactory.getUser("sample_user"));
+            setupGithubServer()
+                    .withStatusCode(200)
+                    .withResponseBody(GithubUserFactory.getUser("sample_user"));
         //when
         //first searching
-        findUserDetails.findByLogin(Login.of("sample_user"));
+            findUserDetails.findByLogin(Login.of("sample_user"));
         //second searching
-        findUserDetails.findByLogin(Login.of("sample_user"));
+            findUserDetails.findByLogin(Login.of("sample_user"));
         //then
-        int userSearchingCounter = database.findCounterByLogin("sample_user");
-        assertEquals(2, userSearchingCounter);
+            int userSearchingCounter = database.findCounterByLogin("sample_user").orElse(0);
+            assertEquals(2, userSearchingCounter);
     }
 
     @Test
     @DisplayName("When github user was not looked up then their counter does not exist")
     void when_user_not_looked_up_then_counter_not_exist(){
-        assertThrows(EmptyResultDataAccessException.class, ()-> database.findCounterByLogin("sample_user"));
+        //when
+            Integer found = database.findCounterByLogin("sample_user").orElse(0);
+            assertEquals(0, found);
     }
-
 }
