@@ -8,7 +8,4 @@
             <column name="request_count" type="int"/>
         </createTable>
     </changeSet>
-<!--    <changeSet author="odrescher" id="1632816968855-52">-->
-<!--        <addPrimaryKey columnNames="login" constraintName="login_pkey" tableName="request_details"/>-->
-<!--    </changeSet>-->
 </databaseChangeLog>
